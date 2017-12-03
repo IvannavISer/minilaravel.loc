@@ -1,5 +1,5 @@
-@extends('layouts.site');
-@section('content');
+@extends('layouts.site')
+@section('content')
 <div class="container">
     <!-- Example row of columns -->
     <div class="row">

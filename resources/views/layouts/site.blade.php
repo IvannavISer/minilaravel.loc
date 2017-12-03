@@ -31,15 +31,6 @@
         </ul><!--/.navbar-collapse -->
     </div>
 </nav>
-    @if(count($errors)>0)
-        <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{$error}}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 <div class="jumbotron">
     <div class="container">
         <p>{{$message}}</p>
@@ -47,7 +38,6 @@
         <p><a class="btn btn-primary btn-lg" href="/create" role="button">ADD new record</a></p>
     </div>
 </div>
-
     @yield('content')
     @yield('contact')
 </body>

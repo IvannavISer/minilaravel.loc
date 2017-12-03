@@ -1,9 +1,19 @@
-@extends('layouts.site');
-@section('content');
+@extends('layouts.site')
+@section('content')
 <div class="container">
     <!-- Example row of columns -->
     <div class="row">
-
+        @if(count($errors)>0)
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>
+                            {{$error}}
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="form">
             @if($article)
             <form method="POST" action="{{route('articleEditing',['$article'=>$article->id])}}">

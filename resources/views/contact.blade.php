@@ -1,11 +1,20 @@
-@extends('layouts.site');
-@section('contact');
+@extends('layouts.site')
+@section('contact')
 <div class="container">
+    @if(count($errors)>0)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>
+                        {{$error}}
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <!-- Example row of columns -->
     <div class="row">
-
         <div class="form">
-
             <form method="POST" action="{{route('contact')}}">
                 <h1>Contact US</h1>
                 <div class="form-group">
@@ -24,7 +33,6 @@
                     <label for="exampleInputFile">Text</label>
                     <textarea class="form-control" name="text"></textarea>
                 </div>
-
                 <button type="submit" class="btn btn-default">Submit</button>
 
             {{ csrf_field() }}<!--защита от меж сайтовых подделок запроса-->

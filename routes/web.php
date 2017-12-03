@@ -29,16 +29,16 @@
 //Route::post('page/add','IndexController@store')->name('articleStore');
 //});
 
-Route::get('article/{id}','IndexController@show')->name('articleShow');//динамический запрос
-Route::delete('/delete/{article}',function (\App\Article $article){
-    //$article_tmp = \App\Article::where('id',$article)->first();
-    //$article_tmp->delete();
-    $article->delete();
-    return redirect('/');
-})->name('articleDelete');
-Route::get('/editing/{id}','IndexController@visual')->name('articleVisual');
-Route::post('/editing/{id}','IndexController@editing')->name('articleEditing');
-Route::get('/about','AboutController@show');
-Route::match(['get','post'],'/contact/{id?}',['uses'=>'Admin\ContactController@contact','as'=>'contact']);
+    Route::get('article/{id}', 'IndexController@show')->name('articleShow');//динамический запрос
+    Route::delete('/delete/{article}', function (\App\Article $article) {
+        //$article_tmp = \App\Article::where('id',$article)->first();
+        //$article_tmp->delete();
+        $article->delete();
+        return redirect('/');
+    })->name('articleDelete');
+    Route::get('/editing/{id}', 'IndexController@visual')->name('articleVisual');
+    Route::post('/editing/{id}', 'IndexController@editing')->name('articleEditing');
+    Route::get('/about', 'AboutController@show');
+    Route::match(['get', 'post'], '/contact/{id?}', ['uses' => 'Admin\ContactController@contact', 'as' => 'contact']);
 //Route::get('test','Admin\CoreResource'); //так добовляют дополнительный метод в рессуры
-Route::resource('/','Admin\CoreResource',['except'=>['show']]);
+    Route::resource('/', 'Admin\CoreResource', ['except' => ['show']]);

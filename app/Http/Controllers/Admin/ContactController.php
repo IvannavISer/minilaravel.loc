@@ -28,25 +28,26 @@ class ContactController extends Controller
     }
 
     public function contact(Request $request,$id=FALSE){
-        $rules = [
-            'name'=>'required|max:10',
-            'email'=>'required|email'
-        ];
-        $validator = Validator::make($request->all(), $rules);
         if($request->isMethod('post')){
+            $rules = [
+                'name'=>'required|max:10',
+                'email'=>'required|email'
+            ];
+            $validator = Validator::make($request->all(), $rules);
             if( $validator->fails() ) {
                 $request->flash();
 
             }
             dump( $request->all() );
+            return view('contact',['title'=>'Contacts'])->with(['message'=>$this->message,'header'=>$this->header])
+                ->withErrors($validator)
+                ->withInput( $request->all() );
 
         }
         // $request->flash();//сохранения данные сессии еще нужно в классе karnel добавить старт сессии
         // $request->flush();//отчищяет данные сессии
         //print_r($request->except('email','site'));
-        return view('contact',['title'=>'Contacts'])->with(['message'=>$this->message,'header'=>$this->header])
-            ->withErrors($validator)
-            ->withInput( $request->all() );
+
        // return view('contact',['title'=>'Contacts'])->with(['message'=>$this->message,'header'=>$this->header]);
     }
 }

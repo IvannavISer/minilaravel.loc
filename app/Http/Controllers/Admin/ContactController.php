@@ -48,6 +48,6 @@ class ContactController extends Controller
         // $request->flush();//отчищяет данные сессии
         //print_r($request->except('email','site'));
 
-       // return view('contact',['title'=>'Contacts'])->with(['message'=>$this->message,'header'=>$this->header]);
+       return view('contact',['title'=>'Contacts'])->with(['message'=>$this->message,'header'=>$this->header]);
     }
 }

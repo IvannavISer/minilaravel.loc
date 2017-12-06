@@ -30,7 +30,7 @@ class ContactController extends Controller
     public function contact(Request $request,$id=FALSE){
         if($request->isMethod('post')){
             $rules = [
-                'name'=>'required|max:10',
+                'name'=>'required|max:10|unique:users,name',//проврека на уникальность name в таблице users
                 'email'=>'required|email'
             ];
             $validator = Validator::make($request->all(), $rules);

@@ -31,7 +31,7 @@ class ContactController extends Controller
         if($request->isMethod('post')){
             $rules = [
                 'name'=>'required|max:10|unique:users,name',//проврека на уникальность name в таблице users
-                'email'=>'required|email'
+                'email'=>'required|email|max:15'
             ];
             $validator = Validator::make($request->all(), $rules);
             if( $validator->fails() ) {
@@ -41,7 +41,7 @@ class ContactController extends Controller
             dump( $request->all() );
             return view('contact',['title'=>'Contacts'])->with(['message'=>$this->message,'header'=>$this->header])
                 ->withErrors($validator)
-                ->withInput( $request->all() );
+                ->withInput( $request->all());// для флэш вывода
 
         }
         // $request->flash();//сохранения данные сессии еще нужно в классе karnel добавить старт сессии

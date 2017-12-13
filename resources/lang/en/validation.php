@@ -100,9 +100,13 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'name' => [
+            'required' => 'Обязательно к заполенению',
         ],
+        'email' =>[
+            'max' => 'Максимальное количетсво символов - :max',
+            'required' => 'email обезателен'
+        ]
     ],
 
     /*

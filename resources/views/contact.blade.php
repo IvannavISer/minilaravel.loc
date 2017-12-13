@@ -19,7 +19,7 @@
                 <h1>Contact US</h1>
                 <div class="form-group">
                     <label for="title">Name</label>
-                    <input type="text" class="form-control" value="{{old('name')}}" id="title" name="name" placeholder="Name">
+                    <input type="text" class="form-control" value="{{old('name')}}" id="name" name="name" placeholder="Name">
                 </div>
                 <div class="form-group">
                     <label for="alias">Email</label>

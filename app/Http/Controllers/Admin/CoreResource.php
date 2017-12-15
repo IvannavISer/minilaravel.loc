@@ -123,6 +123,8 @@ class CoreResource extends Controller
     //для удаления из бд с переданным id
     public function destroy($id)
     {
-
+        $article_tmp = Article::where('id',$id)->first();
+        $article_tmp->delete();
+       return view('page');
     }
 }

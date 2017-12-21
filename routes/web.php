@@ -39,8 +39,8 @@
     Route::resource('/', 'Admin\CoreResource', ['except' => ['show']]);
 
 //Auth::routes();
-//Route::get('/home', 'HomeController@index')->name('home');
-
+Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();
 Route::group(['prefix'=>'admin','middleware'=>['web','auth']],function (){
     //admin/
     Route::get('/',['uses'=>'Admin\AdminController@show', 'as'=>'admin_index']);

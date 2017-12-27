@@ -36,7 +36,8 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-
+    //переопределённый метод из папки vendor класс AuthenticatesUsers для аутентификация
+    // пользователя по login
     public function username()
     {
         return 'login';

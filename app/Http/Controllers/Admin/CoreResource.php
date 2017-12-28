@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Article;
+use Illuminate\Support\Facades\Auth;
 
 class CoreResource extends Controller
 {
@@ -13,6 +14,7 @@ class CoreResource extends Controller
     protected $url;
     public function __construct()
     {
+        //$this->middleware('auth'); все пользваотели должны регаца
         $this->header = 'MAIN';
         $this->message = 'This is a template for a simple marketing or informational website. 
         It includes a large callout called a jumbotron and three supporting pieces 
@@ -123,8 +125,11 @@ class CoreResource extends Controller
     //для удаления из бд с переданным id
     public function destroy($id)
     {
-        $article_tmp = Article::where('id',$id)->first();
-        $article_tmp->delete();
-       return view('page');
+        if(Auth::check()) {
+            $article_tmp = Article::where('id', $id)->first();
+            $article_tmp->delete();
+            return redirect('/');
+        }
+        else return redirect('login');
     }
 }

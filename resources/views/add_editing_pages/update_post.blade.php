@@ -36,7 +36,7 @@
             </div>
             <div class="form-group">
                 <label for="text">Текст</label>
-                <textarea type="text" class = "form-control" id="text" value="{{$article->text}}" rows="3"></textarea>
+                <textarea type="text" class = "form-control" id="text"rows="3">{{$article->text}}</textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

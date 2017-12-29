@@ -47,6 +47,6 @@ Route::group(['prefix'=>'admin','middleware'=>['web','auth']],function (){
     Route::get('/add/post',['uses'=>'Admin\AdminPostController@show', 'as'=>'admin_add_post']);
     Route::post('/add/post',['uses'=>'Admin\AdminPostController@create', 'as'=>'admin_add_post']);
 
-    Route::get('/update/post/{id}',['uses'=>'Admin\AdminPostController@showUp', 'as'=>'admin_add_post']);
+    Route::get('/update/post/{id}',['uses'=>'Admin\AdminPostController@showUp', 'as'=>'admin_update_post']);
     Route::post('/update/post',['uses'=>'Admin\AdminPostController@createUp', 'as'=>'admin_update_post']);
 });

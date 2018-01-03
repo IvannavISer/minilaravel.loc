@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Article;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+
 
 class AdminPostController extends Controller
 {
@@ -32,6 +34,9 @@ class AdminPostController extends Controller
     }
 
     public function create(Request $request){
+        if(Gate::denies('add-article')){
+            return redirect()->back()->with(['message'=>'у вас нет прав']);
+        }
         $this->validate($request,[
             'title' => 'required|max:10',
             'desk' => 'required|max:10',

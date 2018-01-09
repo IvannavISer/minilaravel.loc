@@ -64,8 +64,8 @@ class AdminPostController extends Controller
         $data = $request->except('_token');
         $article = Article::find($data['id']);
 
-        $article->title = data['title'];
-        $article->desk = data['desk'];
+        $article->title = $data['title'];
+        $article->desk = $data['desk'];
         $article->alias = $data['alias'];
         $article->text = $data['text'];
 

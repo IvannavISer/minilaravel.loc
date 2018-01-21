@@ -44,6 +44,9 @@ class ContactController extends Controller
                 ->withInput( $request->all());// для флэш вывода
 
         }
+        //$user = User::find(1);
+        //dump($user->articles);получим все записи которые привязаны к юзиру с id = 1
+        //$user->articles()->where('id',1) вызывая articles() это конструктор динамических запросов
         // $request->flash();//сохранения данные сессии еще нужно в классе karnel добавить старт сессии
         // $request->flush();//отчищяет данные сессии
         //print_r($request->except('email','site'));

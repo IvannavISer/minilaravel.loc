@@ -19,24 +19,24 @@
                 {{'message'}}
             </div>
         @endif
-        <form method="post" action="{{route('admin_update_post')}}">
+        <form method="POST" action="{{route('admin_save_update_post')}}">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="id" value="{{$article->id}}">
             <div class="form-group">
                 <label for="title">Заголовок</label>
-                <input type="text" class = "form-control" id="title" value="{{$article->title}}" placeholder="введите название">
+                <input type="text" class = "form-control" id="title" name="title" value="{{$article->title}}" placeholder="введите название">
             </div>
             <div class="form-group">
                 <label for="alias">Псевдоним</label>
-                <input type="text" class = "form-control" id="alias" value="{{$article->alias}}" placeholder="введите псевдоним">
+                <input type="text" class = "form-control" id="alias"  name="alias" value="{{$article->alias}}" placeholder="введите псевдоним">
             </div>
             <div class="form-group">
                 <label for="desc">Краткое описание</label>
-                <input type="text" class = "form-control" id="desc" value="{{$article->desc}}" placeholder="введите краткое описание">
+                <input type="text" class = "form-control" id="desc" name="desc" value="{{$article->desc}}" placeholder="введите краткое описание">
             </div>
             <div class="form-group">
                 <label for="text">Текст</label>
-                <textarea type="text" class = "form-control" id="text"rows="3">{{$article->text}}</textarea>
+                <textarea type="text" class = "form-control" id="text" name = "text" rows="3">{{$article->text}}</textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

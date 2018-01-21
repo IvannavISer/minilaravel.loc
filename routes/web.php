@@ -30,13 +30,14 @@
 //});
 
     Route::get('article/{id}', 'IndexController@show')->name('articleShow');//динамический запрос
-    Route::delete('/delete/{id}',['uses'=>'Admin\CoreResource@destroy','as'=>'articleDelete']);//с добавлением 'middleware'=>'auth' удалить запись может только аутентифицированный пользователь
+    Route::delete('/delete/{id}',['uses'=>'Admin\CoreResource@destroy','as'=>'articleDelete']);
     Route::get('/editing/{id}', 'IndexController@visual')->name('articleVisual');
     Route::post('/editing/{id}', 'IndexController@editing')->name('articleEditing');
     Route::get('/about', 'AboutController@show');
     Route::match(['get', 'post'], '/contact/{id?}',['middleware'=> ['web','auth'] , 'uses' => 'Admin\ContactController@contact', 'as' => 'contact']);//с добавлением 'middleware'=>'auth' только аутентифицированный пользователь может просматривать
 //Route::get('test','Admin\CoreResource'); //так добовляют дополнительный метод в рессуры
     Route::resource('/', 'Admin\CoreResource', ['except' => ['show']]);
+
 
 //Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
@@ -46,7 +47,8 @@ Route::group(['prefix'=>'admin','middleware'=>['web','auth']],function (){
     Route::get('/',['uses'=>'Admin\AdminController@show', 'as'=>'admin_index']);
     Route::get('/add/post',['uses'=>'Admin\AdminPostController@show', 'as'=>'admin_add_post']);
     Route::post('/add/post',['uses'=>'Admin\AdminPostController@create', 'as'=>'admin_add_post']);
+    Route::get('update/{id}', 'Admin\AdminPostController@showUp')->name('admin_update_post');
+    Route::post('update', 'Admin\AdminPostController@saveUp')->name('admin_save_update_post');
+    //Route::post('/update',['uses'=>'Admin\AdminPostController@saveUp', 'as'=>'admin_update_post']);
 
-    Route::get('/update/post/{id}',['uses'=>'Admin\AdminPostController@showUp', 'as'=>'admin_update_post']);
-    Route::post('/update/post',['uses'=>'Admin\AdminPostController@createUp', 'as'=>'admin_update_post']);
 });

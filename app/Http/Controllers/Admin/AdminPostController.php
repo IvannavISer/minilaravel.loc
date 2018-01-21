@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Article;
-use Illuminate\Auth\Access\Gate;
+use Gate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -27,51 +27,57 @@ class AdminPostController extends Controller
     }
 
     public function showUp($id){
-        $article = Article::find($id);
+        $article = Article::select(['id','title','desc','text','alias'])->where('id',$id)->firstOrFail();
         return view('add_editing_pages.update_post',['title'=>'Редактирование материала','article'=>$article])->with(['message'=>$this->message,
             'header'=>$this->header
         ]);
     }
 
     public function create(Request $request){
+        //если запрещенно
         if(Gate::denies('add-article')){
             return redirect()->back()->with(['message'=>'у вас нет прав']);
         }
         $this->validate($request,[
             'title' => 'required|max:10',
-            'desk' => 'required|max:10',
-            'alias' => 'required|unique:articles,alias',
+            'alias'=>'required',
+            'desc' =>'required',
             'text' =>'required'
         ]);
+
         $user = Auth::user();//получаем текущего пользователя так как редактирвоать может только авториз.польз
         $data = $request->all();
-        $res = $user->articles()->create([
+        $res = $user->articles()->create ([
            'title'=>$data['title'],
-            'desk'=>$data['desk'],
+            'desc'=>$data['desc'],
             'alias'=>$data['alias'],
-            'test'=>$data['data']
+            'text'=>$data['text']
         ]);
-        return redirect()->back()->with('message','Матеарил добавлен');
+        return redirect()->back()->with(['message'=>'Матеарил добавлен']);
     }
-    public function createUp(Request $request){
+    public function saveUp(Request $request){
         $this->validate($request,[
             'title' => 'required|max:10',
-            'desk' => 'required|max:10',
-            'alias' => 'required|unique:articles,alias',
+            'alias'=>'required',
+            'desc' =>'required',
             'text' =>'required'
         ]);
         $user = Auth::user();//получаем текущего пользователя так как редактирвоать может только авториз.польз
         $data = $request->except('_token');
+        //$data = $request->all();
         $article = Article::find($data['id']);
+        if(Gate::/*forUser(6)->*/allows('update-article',$article)) {
 
-        $article->title = $data['title'];
-        $article->desk = $data['desk'];
-        $article->alias = $data['alias'];
-        $article->text = $data['text'];
+            $article->title = $data['title'];
+            $article->desc = $data['desc'];
+            $article->alias = $data['alias'];
+            $article->text = $data['text'];
 
-        $res = $user->articles()->save($article);
+            $res = $user->articles()->save($article);
 
-        return redirect()->back()->with('message','Материал изменён');
+            return redirect()->back()->with('message', 'Материал изменён');
+        }
+        return redirect()->back()->with(['message'=>'у вас нет прав']);
     }
 
 }

@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
-use Gate;
+
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\User;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -30,11 +31,22 @@ class AuthServiceProvider extends ServiceProvider
         $gate->define('add-article',function (User $user){
             foreach ($user->roles as $role)
             {
-                if($role->name == 'admin'){
-                    return true;
+                if($role->name == 'Admin'){
+                    return TRUE;
                 }
             }
-            return false;
+            return FALSE;
+        });
+        $gate->define('update-article',function (User $user, $article){
+            foreach ($user->roles as $role)
+            {
+                if($role->name == 'Admin'){
+                    if($user->id == $article->user_id){
+                        return TRUE;
+                    }
+                }
+            }
+            return FALSE;
         });
         //
     }

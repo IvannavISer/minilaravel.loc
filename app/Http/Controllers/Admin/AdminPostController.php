@@ -53,7 +53,7 @@ class AdminPostController extends Controller
             'alias'=>$data['alias'],
             'text'=>$data['text']
         ]);
-        return redirect()->back()->with(['message'=>'Матеарил добавлен']);
+        return redirect()->back()->with(['message','Матеарил добавлен']);
     }
     public function saveUp(Request $request){
         $this->validate($request,[
@@ -77,7 +77,7 @@ class AdminPostController extends Controller
 
             return redirect()->back()->with('message', 'Материал изменён');
         }
-        return redirect()->back()->with(['message'=>'у вас нет прав']);
+        return redirect()->back()->with(['message','у вас нет прав']);
     }
 
 }

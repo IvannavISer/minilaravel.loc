@@ -14,11 +14,20 @@
                 </ul>
             </div>
         @endif
-        @if(session('message'))
+
+        {{--не работает --}}
+        @if(session('status'))
             <div class="alert alert-success">
-                {{'message'}}
+                {{'status'}}
             </div>
         @endif
+        @cannot('update',$article)
+            <div class="alert alert-success">
+                У вас нет прав
+            </div>
+        @endcannot
+        {{--не работает--}}
+
         <form method="POST" action="{{route('admin_save_update_post')}}">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <input type="hidden" name="id" value="{{$article->id}}">

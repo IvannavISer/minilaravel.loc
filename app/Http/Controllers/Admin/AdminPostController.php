@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 
+
 class AdminPostController extends Controller
 {
     public function __construct()
@@ -35,8 +36,16 @@ class AdminPostController extends Controller
 
     public function create(Request $request){
         //если запрещенно
-        if(Gate::denies('add-article')){
-            return redirect()->back()->with(['message'=>'у вас нет прав']);
+        $article = new Article;
+        /*первый способ*/
+//        if(Gate::denies('add',$article)){
+//            return redirect()->back()->with(['message'=>'у вас нет прав']);
+//        }
+        /*второй способ*/
+        if($request->user()->cannot('add',$article))
+        {
+
+            return redirect()->back()->with('status','у вас нет прав');
         }
         $this->validate($request,[
             'title' => 'required|max:10',
@@ -47,13 +56,13 @@ class AdminPostController extends Controller
 
         $user = Auth::user();//получаем текущего пользователя так как редактирвоать может только авториз.польз
         $data = $request->all();
-        $res = $user->articles()->create ([
+        $user->articles()->create ([
            'title'=>$data['title'],
             'desc'=>$data['desc'],
             'alias'=>$data['alias'],
             'text'=>$data['text']
         ]);
-        return redirect()->back()->with(['message','Матеарил добавлен']);
+        return redirect()->back()->with('status','Матеарил добавлен');
     }
     public function saveUp(Request $request){
         $this->validate($request,[
@@ -66,18 +75,19 @@ class AdminPostController extends Controller
         $data = $request->except('_token');
         //$data = $request->all();
         $article = Article::find($data['id']);
-        if(Gate::/*forUser(6)->*/allows('update-article',$article)) {
+        //if(Gate::/*forUser(6)->*/allows('update',$article)) {
+        if($request->user()->can('update',$article)){
 
             $article->title = $data['title'];
             $article->desc = $data['desc'];
             $article->alias = $data['alias'];
             $article->text = $data['text'];
 
-            $res = $user->articles()->save($article);
+            $user->articles()->save($article);
 
-            return redirect()->back()->with('message', 'Материал изменён');
+            return redirect()->back()->with('status', 'Материал изменён');
         }
-        return redirect()->back()->with(['message','у вас нет прав']);
+        return redirect()->back()->with('status','у вас нет прав');
     }
 
 }

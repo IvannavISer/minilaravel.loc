@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Article;
+use Event;
+use App\Events\onAddArticleEvent;
 use Gate;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+
 
 
 
@@ -55,12 +58,13 @@ class AdminPostController extends Controller
 
         $user = Auth::user();//получаем текущего пользователя так как редактирвоать может только авториз.польз
         $data = $request->all();
-        $user->articles()->create ([
+       $res = $user->articles()->create ([
            'title'=>$data['title'],
             'desc'=>$data['desc'],
             'alias'=>$data['alias'],
             'text'=>$data['text']
         ]);
+        Event::fire(new onAddArticleEvent($res,$user));
         return redirect()->back()->with('status','Матеарил добавлен');
     }
     public function saveUp(Request $request){
@@ -82,7 +86,7 @@ class AdminPostController extends Controller
             $article->alias = $data['alias'];
             $article->text = $data['text'];
 
-            $user->articles()->save($article);
+           $user->articles()->save($article);
 
             return redirect()->back()->with('status', 'Материал изменён');
         }

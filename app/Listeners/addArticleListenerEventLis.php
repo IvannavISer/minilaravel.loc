@@ -2,12 +2,15 @@
 
 namespace App\Listeners;
 
+use App\Article;
 use App\Events\onAddArticleEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Log;
 
 class addArticleListenerEventLis
 {
+
     /**
      * Create the event listener.
      *
@@ -15,7 +18,7 @@ class addArticleListenerEventLis
      */
     public function __construct()
     {
-        //
+
     }
 
     /**
@@ -26,6 +29,6 @@ class addArticleListenerEventLis
      */
     public function handle(onAddArticleEvent $event)
     {
-        //
+        Log::info('Article save in database',[$event->user_name=>$event->article_title]);
     }
 }

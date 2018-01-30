@@ -28,15 +28,16 @@ class ContactController extends Controller
     }
 
     public function contact(Request $request,$id=FALSE){
+
         if($request->isMethod('post')){
             $rules = [
                 'name'=>'required|max:10|unique:users,name',//проврека на уникальность name в таблице users
                 'email'=>'required|email|max:15'
             ];
             $validator = Validator::make($request->all(), $rules);
+            //сообщения об ошибке валидации в файле validation.php
             if( $validator->fails() ) {
                 $request->flash();
-
             }
             dump( $request->all() );
             return view('contact',['title'=>'Contacts'])->with(['message'=>$this->message,'header'=>$this->header])
@@ -50,7 +51,8 @@ class ContactController extends Controller
         // $request->flash();//сохранения данные сессии еще нужно в классе karnel добавить старт сессии
         // $request->flush();//отчищяет данные сессии
         //print_r($request->except('email','site'));
-
+        $res = $request->session()->all();
+        dump($res);
        return view('contact',['title'=>'Contacts'])->with(['message'=>$this->message,'header'=>$this->header]);
     }
 }

@@ -15,7 +15,11 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         'App\Events\Event' => [
             'App\Listeners\EventListener',
+
         ],
+        'App\Events\onAddArticleEvent' =>[
+          'App\Listeners\addArticleListenerEventLis'
+        ],//зарегистрирован класс события и класс оброботчик события
     ];
 
     /**

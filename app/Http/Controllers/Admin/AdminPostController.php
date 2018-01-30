@@ -44,7 +44,6 @@ class AdminPostController extends Controller
         /*второй способ*/
         if($request->user()->cannot('add',$article))
         {
-
             return redirect()->back()->with('status','у вас нет прав');
         }
         $this->validate($request,[

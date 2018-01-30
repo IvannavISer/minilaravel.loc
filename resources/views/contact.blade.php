@@ -22,6 +22,7 @@
                     <input type="text" class="form-control" value="{{old('name')}}" id="name" name="name" placeholder="Name">
                 </div>
                 <div class="form-group">
+
                     <label for="alias">Email</label>
                     <input type="text" class="form-control" value="{{old('email')}}" id="email" name="email" placeholder="Email">
                 </div>

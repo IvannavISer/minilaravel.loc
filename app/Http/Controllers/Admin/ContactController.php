@@ -4,7 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Validator;
+use App\Http\MyInter\SaveData;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Validator;
+
+
+
 
 class ContactController extends Controller
 {
@@ -27,7 +32,10 @@ class ContactController extends Controller
         $this->url = 'http://minilaravel.loc/page/add';
     }
 
-    public function contact(Request $request,$id=FALSE){
+    public function contact(Request $request,SaveData $data, $id=FALSE){
+
+        $result = $data->save($request, Auth::user());
+        dump($result);
 
         if($request->isMethod('post')){
             $rules = [

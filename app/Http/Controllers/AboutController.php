@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use function Symfony\Component\VarDumper\Tests\Caster\reflectionParameterFixture;
 use App\Article;
 use App\User;

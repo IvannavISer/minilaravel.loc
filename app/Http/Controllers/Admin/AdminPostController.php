@@ -65,8 +65,9 @@ class AdminPostController extends Controller
             'text'=>$data['text']
         ]);
         Event::fire(new onAddArticleEvent($res,$user));
-        return redirect()->back()->with('status','Матеарил добавлен');
+        return redirect()->back();
     }
+
     public function saveUp(Request $request){
         $this->validate($request,[
             'title' => 'required|max:10',

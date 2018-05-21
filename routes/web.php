@@ -30,7 +30,7 @@
 //});
 
     Route::get('article/{id}', 'IndexController@show')->name('articleShow');//динамический запрос
-    Route::delete('/delete/{id}',['uses'=>'Admin\CoreResource@destroy','as'=>'articleDelete']);
+    Route::delete('delete',['middleware'=>['web','auth'],'uses'=>'Admin\AdminPostController@delete','as'=>'articleDelete']);
     Route::get('/editing/{id}', 'IndexController@visual')->name('articleVisual');
     Route::post('/editing/{id}', 'IndexController@editing')->name('articleEditing');
     Route::get('/about', 'AboutController@show');

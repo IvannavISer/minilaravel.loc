@@ -38,4 +38,14 @@ class ArticlePolicy
         }
         return FALSE;
     }
+    public function delete(User $user, Article $article){
+        foreach ($user->roles as $role){
+            if($role->name == 'Admin'){
+                if($user->id == $article->user_id){
+                    return TRUE;
+                }
+            }
+        }
+        return FALSE;
+    }
 }

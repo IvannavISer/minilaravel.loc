@@ -93,5 +93,16 @@ class AdminPostController extends Controller
         }
         return redirect()->back()->with('status','у вас нет прав');
     }
+    public function delete(Request $request){
+        $data = $request->except('_token');
+        $id = $data['id'];
+        $article = Article::find($data['id']);
+        if($request->user()->can('delete',$article)) {
+            $article_tmp = Article::where('id', $id)->first();
+            $article_tmp->delete();
+            return redirect('/');
+        }
+        else return redirect('/');
+    }
 
 }

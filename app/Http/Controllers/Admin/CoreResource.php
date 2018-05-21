@@ -123,13 +123,8 @@ class CoreResource extends Controller
      * @return \Illuminate\Http\Response
      */
     //для удаления из бд с переданным id
-    public function destroy($id)
+    public function destroy()
     {
-        if(Auth::check()) {
-            $article_tmp = Article::where('id', $id)->first();
-            $article_tmp->delete();
-            return redirect('/');
-        }
-        else return redirect('login');
+
     }
 }

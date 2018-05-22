@@ -13,10 +13,12 @@ use Illuminate\Support\Facades\Auth;
 
 
 
+
 class AdminPostController extends Controller
 {
     public function __construct()
     {
+        $this->status = 'Добавлен';
         $this->header = 'MAIN';
         $this->message = 'This is a template for a simple marketing or informational website. 
         It includes a large callout called a jumbotron and three supporting pieces 
@@ -39,6 +41,8 @@ class AdminPostController extends Controller
 
     public function create(Request $request){
         //если запрещенно
+        $data = $request->session()->all();
+
         $article = new Article;
         /*первый способ*/
 //        if(Gate::denies('add',$article)){
@@ -47,7 +51,7 @@ class AdminPostController extends Controller
         /*второй способ*/
         if($request->user()->cannot('add',$article))
         {
-            return redirect()->back()->with('status','у вас нет прав');
+            return redirect('/')->with('status','у вас нет прав');
         }
         $this->validate($request,[
             'title' => 'required|max:10',
@@ -65,7 +69,7 @@ class AdminPostController extends Controller
             'text'=>$data['text']
         ]);
         Event::fire(new onAddArticleEvent($res,$user));
-        return redirect()->back();
+        return redirect('/')->with('status','добавлено');
     }
 
     public function saveUp(Request $request){
@@ -89,9 +93,9 @@ class AdminPostController extends Controller
 
            $user->articles()->save($article);
 
-            return redirect()->back()->with('status', 'Материал изменён');
+            return redirect('/')->with('status', 'Материал изменён');
         }
-        return redirect()->back()->with('status','у вас нет прав');
+        return redirect('/')->with('status','у вас нет прав');
     }
     public function delete(Request $request){
         $data = $request->except('_token');

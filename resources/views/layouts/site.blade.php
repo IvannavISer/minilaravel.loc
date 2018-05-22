@@ -33,6 +33,7 @@
 </nav>
 <div class="jumbotron">
     <div class="container">
+
         <p>{{$message}}</p>
         <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
         <p><a class="btn btn-primary btn-lg" href="/admin/add/post" role="button">ADD Admin Record</a></p>

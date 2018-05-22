@@ -30,11 +30,11 @@
 //});
 
     Route::get('article/{id}', 'IndexController@show')->name('articleShow');//динамический запрос
-    Route::delete('delete',['middleware'=>['web','auth'],'uses'=>'Admin\AdminPostController@delete','as'=>'articleDelete']);
+    Route::delete('delete',['middleware'=>['auth'],'uses'=>'Admin\AdminPostController@delete','as'=>'articleDelete']);
     Route::get('/editing/{id}', 'IndexController@visual')->name('articleVisual');
     Route::post('/editing/{id}', 'IndexController@editing')->name('articleEditing');
     Route::get('/about', 'AboutController@show');
-    Route::match(['get', 'post'], '/contact/{id?}',['middleware'=> ['web','auth'] , 'uses' => 'Admin\ContactController@contact', 'as' => 'contact']);//с добавлением 'middleware'=>'auth' только аутентифицированный пользователь может просматривать
+    Route::match(['get', 'post'], '/contact/{id?}',['middleware'=> ['auth'] , 'uses' => 'Admin\ContactController@contact', 'as' => 'contact']);//с добавлением 'middleware'=>'auth' только аутентифицированный пользователь может просматривать
 //Route::get('test','Admin\CoreResource'); //так добовляют дополнительный метод в рессуры
     Route::resource('/', 'Admin\CoreResource', ['except' => ['show']]);
 
@@ -42,7 +42,7 @@
 //Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
-Route::group(['prefix'=>'admin','middleware'=>['web','auth']],function (){
+Route::group(['prefix'=>'admin','middleware'=>['auth']],function (){
     //admin/
     Route::get('/',['uses'=>'Admin\AdminController@show', 'as'=>'admin_index']);
     Route::get('/add/post',['uses'=>'Admin\AdminPostController@show', 'as'=>'admin_add_post']);
